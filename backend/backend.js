@@ -10,6 +10,10 @@ var randomtoken = require('rand-token');     /* https://www.npmjs.com/package/ra
 var cors = require('cors');
 /* CORS */
 
+/* stripe setup */
+var stripe = require('stripe')('sk_test_4lW0MsOh4LUCBeDYgOs8k32F');
+app.use(express.static('./'));
+
 app.use(cors());
 app.get('/products/:id', function(req, res, next){                    /* Need to come back to this */
   res.json({msg: 'This is CORS-enabled for all origins!'});
@@ -140,6 +144,16 @@ app.post('/login', function(request, response){
                return;
           }
 
+          if(findResponse === null) {
+               console.log('***** CONFIRM THAT WE ARE RETURNING THE CORRECT ERROR CODES *****');
+               response.status(401);
+               response.json({
+                    "status": "fail",
+                    "message": "user does not exist"
+               });
+               return;
+          }
+
           /* OK - we read the user.  Does the password match? use the bcrypt compare() method */
           console.log('checking data for user [' + credentials._id + ']');
 
@@ -208,7 +222,7 @@ app.post('/login', function(request, response){
 /* ------------------------------------------------------- */
 
 app.post('/orders', function(request, response){
-     // console.log(response);
+     /* append the order to the database for the user whose token was provided */
      var orderData = request.body;
 
      User.findOne({"authenticationTokens.token" : orderData.token}, function(error, findOneResponse){
@@ -253,6 +267,30 @@ app.get('/orders', function(request, response){
      });
 
 });
+
+app.post('/charge', function(request, response) {
+  var amount = request.body.amount;
+  var token = request.body.token;
+
+  // make the charge using the credit card associated
+  // with token
+  stripe.charges.create({
+    amount: amount,
+    currency: 'usd',
+    source: token
+  }, function(err, charge) {
+    if (err) {
+         console.log('there was an error with the credit card transaction...');
+      response.json({
+        status: 'fail',
+        error: err.message
+      });
+      return;
+    }
+    response.json({ status: 'ok', charge: charge });
+  });
+});
+
 
 app.listen(3000, function(){
      console.log('listening on port 3000');

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="myApp">
+<html lang="en">
 <head>
      <meta charset="UTF-8">
      <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,11 +20,8 @@
 
 </head>
 
-<body>
-  <div>
-       <ng-view></ng-view>
-  </div>
-
+<body ng-app="myApp">
+     <ng-view></ng-view>
 
      <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
      <script src="js/jquery.js"></script>
@@ -33,6 +30,7 @@
      <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-cookies.js"></script>
      <script src="js/bootstrap.min.js"></script>
      <script src="js/frontend.js"></script>
+     <script src="https://checkout.stripe.com/checkout.js"></script>
 
 </body>
 </html>
