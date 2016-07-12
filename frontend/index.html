@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html ng-app="myApp">
 <head>
      <meta charset="UTF-8">
      <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -19,35 +19,12 @@
      <![endif]-->
 
 </head>
-<body ng-app="myApp" ng-controller="MainController">
 
+<body>
+  <div>
+       <ng-view></ng-view>
+  </div>
 
-     <div class="container">
-          <ng-view></ng-view>
-
-          <div class="row" id= "headerbckgrnd">
-               <div class="col-md-2" >
-                    <img id= "logo" src= "images/dc-roasters.png">
-               </div>
-               <div class="col-md-2"> </div>
-               <div class="col-md-4"> </div>
-               <div class="col-md-4"> </div>
-          </div>
-
-          <div class="row" id="navigation">
-               <div class="col-md-3"><p> 1. Home</p> </div>
-               <div class="col-md-3"><p> 2. Options</p> </div>
-               <div class="col-md-3"><p> 3. Delivery</p> </div>
-               <div class="col-md-3"><p> 4. Payment</p> </div>
-          </div>
-
-          <div class="row">
-               <div id="coffeecup" class="col-sm-12" style="border: 1px solid black;">
-                    <p>tim</p>
-               </div>
-          </div>
-
-     </div> <!-- container -->
 
      <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
      <script src="js/jquery.js"></script>
@@ -56,5 +33,6 @@
      <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-cookies.js"></script>
      <script src="js/bootstrap.min.js"></script>
      <script src="js/frontend.js"></script>
+
 </body>
 </html>
