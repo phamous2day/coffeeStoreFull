@@ -1,6 +1,6 @@
 /* Global Variables */
 
-var API = 'http://localhost:3000';      /* for connection to backend */
+var API = 'https://coffeeapp-uqhwxmhykd.now.sh';      /* for connection to backend */
 
 var pkgAndOpt = {
      package: '',
@@ -30,12 +30,7 @@ myApp.run(function($rootScope, $location, $cookies) {
           var partialUrl = nextUrl.slice(nextUrl.indexOf("#")+1);
 
           if (partialUrl === '/options' || partialUrl === '/deliveries' || partialUrl === '/payments') {
-               // console.log('we have reached one of the pages which must be authenticated');
-               // console.log('partial url = ' + partialUrl);
-               // console.log('is there a cookie?');
                var cookies = $cookies.get('coffeeAppLoginToken');
-               // console.log("cookie will be 'undefined' if there is no cookie; i.e., if the user has not logged in");
-               // console.log('cookie = ' + cookies);
 
                if (cookies !== undefined) {
                     // console.log('user is logged in');
@@ -48,28 +43,6 @@ myApp.run(function($rootScope, $location, $cookies) {
 
                /* save the location of the page which the user was trying to access when he was redirected to the login page */
                $cookies.put('partialUrl', partialUrl);
-               // console.log('need to be re-directed to ' + partialUrl);
-               // console.log('currentUrl = ' + currentUrl);
-
-               /* if user is logged in, re-direct to the requested page.  if not, reroute to login page. */
-               // if (cookies !== undefined) {
-               //
-               //
-               //      /* need to redirect user the the correct page here... */
-               //      if (partialUrl === '/options') {
-               //           $location.path('/options');
-               //      } else if (partialUrl === '/deliveries') {
-               //           $location.path('/deliveries');
-               //      } else if (partialUrl === '/payments') {
-               //           $location.path('/payments');
-               //      } else {
-               //           console.log('there is some kind of error...  page direction was for a page that should require authentication');
-               //           console.log('page name = ' + partialUrl);
-               //      }
-               // } else {
-               //      /* user must not be logged in.  redirect to login page. */
-               //      $location.path('/login');
-               // }
           }
 
 
@@ -175,26 +148,12 @@ myApp.controller("DeliveriesController", function($scope, $http, $location){
 });
 
 /* start the payment controller here... */
-myApp.controller("PaymentsController", function($scope, $http, $location, $cookies){      /* do I really need $location? */
-     // $scope.goPayment = function(fname, addr1, addr2, city, state, zip, delDate){
-     //      deliveryAddress =
-     //      {
-     // fname:     fname,
-     // addr1:     addr1,
-     // addr2:     addr2,
-     // city:      city,
-     // state:     state,
-     // zip:       zip,
-     // delDate:   delDate
-     //      };
+myApp.controller("PaymentsController", function($scope, $http, $location, $cookies){
 
      // console.log('should now be directed to the thankyou page...');
      // $location.path('/payments');
      $scope.deliveryAddress = deliveryAddress;
      $scope.pkgAndOpt = pkgAndOpt;
-     // console.log($scope.deliveryAddress);
-
-     /* $http.post('/someUrl', data, config).then(successCallback, errorCallback); */
 
 
      var data =
@@ -266,9 +225,7 @@ myApp.controller("PaymentsController", function($scope, $http, $location, $cooki
                     );
                }
           });
-          // open the handler - this will open a dialog
-          // with a form with it to prompt for credit card
-          // information from the user
+
           handler.open({
                name: 'DC Coffee Store',
                description: 'Paying for coffee',
@@ -328,7 +285,7 @@ myApp.controller("LoginController", function($scope, $cookies, $http, $location)
 
                /* redirect user to page from whence he came */
                // console.log('about to be redirected after logging in');
-               debugger;
+
 
                $location.path($cookies.get('partialUrl'));
           })
